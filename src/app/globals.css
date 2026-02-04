@@ -1,26 +1,56 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Semantic tokens using light-dark() for automatic switching */
+  --color-background: light-dark(#ffffff, #030712);
+  --color-foreground: light-dark(#111827, #f9fafb);
+
+  /* Overriding core colors to be theme-aware project-wide */
+  --color-white: light-dark(#ffffff, #111827);
+  --color-gray-50: light-dark(#f9fafb, #030712);
+  --color-gray-100: light-dark(#f3f4f6, #1f2937);
+  --color-gray-200: light-dark(#e5e7eb, #374151);
+  --color-gray-300: light-dark(#d1d5db, #4b5563);
+  --color-gray-400: light-dark(#9ca3af, #6b7280);
+  --color-gray-500: light-dark(#6b7280, #9ca3af);
+  --color-gray-600: light-dark(#4b5563, #d1d5db);
+  --color-gray-700: light-dark(#374151, #e5e7eb);
+  --color-gray-800: light-dark(#1f2937, #f3f4f6);
+  --color-gray-900: light-dark(#111827, #f9fafb);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+@layer base {
 
+  *,
+  ::after,
+  ::before {
+    border-color: var(--color-gray-200);
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    transition: background-color 0.2s, color 0.2s;
+  }
+}
+
+/* Ensure color-scheme is set so light-dark() works */
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+/* Specific fix for inputs/selects in dark mode */
+input,
+select,
+textarea {
+  background-color: light-dark(#f9fafb, #1f2937) !important;
+  color: light-dark(#111827, #f9fafb) !important;
+  border-width: 1px;
 }
